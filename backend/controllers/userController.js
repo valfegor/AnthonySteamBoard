@@ -40,8 +40,27 @@ const registerNormalUser = async (req, res) => {
 
 }
 
+const login = async (req, res) => {
+    if(!req.body.email || !req.body.password) return res.status(400).send("Check all the camps please");
+    let user = await User.findOne({email:req.body.email});
+    console.log(user);
+    if(!user) return res.status(400).send("The email or the password its incorrect");
+
+    const hash = await bcrypt.compare(req.body.password, user.password);
+
+    if(!hash) return res.status(400).send("Sorry The email or the password its incorrect");
+
+    try {
+        const jwt = user.generateJWT();
+        return res.status(200).send({jwt});
+    } catch (e) {
+        return res.status(400).send("Sorry please try again");
+    }
+
+}
 
 
 
 
-module.exports = {registerNormalUser}
+
+module.exports = {registerNormalUser,login}
