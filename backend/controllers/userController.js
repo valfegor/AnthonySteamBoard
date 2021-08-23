@@ -93,7 +93,47 @@ const RegisterAdmin = async (req, res) => {
 
 }
 
+const modifyUser = async (req, res) => {
+    if(!req.body._id || !req.body.name || !req.body.id_Role) return res.status(400).send("Sorry check all the camps please");
+
+    let findUser = await User.findById(req.body._id);
+
+    if(!findUser) return res.status(400).send("Sorry the user dont exist");
+
+    let pass = "";
+
+    if(req.body.password){
+        pass = await bcrypt.hash(req.body.password,10);
+    }
+    else{
+        pass = findUser.password;
+    }
+
+    let user = await User.findByIdAndUpdate(req.body._id,{
+        name: req.body.name,
+        password:pass,
+        id_Role:req.body.id_Role,
+        Status:true,
+    })
+
+    if(!user) return res.status(400).send("Sorry please try again");
+    return res.status(200).send({user});
+
+
+}
+
+const listUsers = async (req, res) => {
+    const user = await User.find({name:new RegExp(req.params["name"],"i")}).populate("id_Role").exec();
+
+    if(!user) return res.status(400).send("Sorry no users created");
+
+    const result = user.filter(element=>element!=false);
+
+    return res.status(200).send({result});
+
+}
 
 
 
-module.exports = {registerNormalUser,login,RegisterAdmin}
+
+module.exports = {registerNormalUser,login,RegisterAdmin,modifyUser,listUsers}
