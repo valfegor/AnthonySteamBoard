@@ -59,8 +59,41 @@ const login = async (req, res) => {
 
 }
 
+const RegisterAdmin = async (req, res) => {
+
+    if(!req.body.name || !req.body.password || !req.body.email || !req.body.id_Role) return res.status(400).send("Sorry Check all the camps please");
+
+    let validId = await mongoose.Types.ObjectId.isValid(req.body.id_Role);
+     if (!validId) return res.status(400).send("Invalid role ID");
+
+    const existingEmail = await User.findOne({email:req.body.email});
+
+    if(existingEmail) return res.status(400).send("Email already taken");
+
+    const hash = await bcrypt.hash(req.body.password,10);
+
+    let user = new User({
+        name: req.body.name,
+        email:req.body.email,
+        password:hash,
+        id_Role:req.body.id_Role,
+        Status:true,
+    })
+
+    let result = user.save();
+
+    if(!result) return res.status(400).send("Sorry please try again");
+
+    try {
+        let jwt = user.generateJWT();
+        return res.status(200).send({jwt});
+    } catch (e) {
+        return res.status(400).send("Sorry please try again");
+    }
+
+}
 
 
 
 
-module.exports = {registerNormalUser,login}
+module.exports = {registerNormalUser,login,RegisterAdmin}

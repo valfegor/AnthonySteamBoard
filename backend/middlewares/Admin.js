@@ -5,7 +5,9 @@ const Admin = async(req, res,next) =>{
 
     if(!role) return res.status(400).send("Sorry That Role dont exist in the base");
 
-    if(role.name === "user") next();
+    console.log(role);
+
+    if(role.name === "admin") next();
     else return res.status(400).send("Sorry you are not admin plase call the admin");
 
 }

@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const Auth = async(req,res,next) =>{
     let jwtToken = req.header("Authorization");
 
-    if(!jwtToken) return res.status("Sorry Please Login in the app");
+    //si el token es diferente o no tiene termina la ejecucion
+    if(!jwtToken) return res.status(400).send("No token please login");
 
     jwtToken = jwtToken.split(" ")[1];
 
