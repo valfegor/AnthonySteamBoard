@@ -10,5 +10,6 @@ router.post("/login",userController.login);
 router.post("/registerAdmin",Auth,Validate,Admin,userController.RegisterAdmin);
 router.put("/modifyUser",Auth,Validate,Admin,userController.modifyUser);
 router.get("/listUsers/:name?",Auth,Validate,Admin,userController.listUsers);
+router.delete("/removeUser/:_id",Auth,Validate,Admin,userController.eliminateUser);
 
 module.exports = router; 
