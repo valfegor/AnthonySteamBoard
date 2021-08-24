@@ -8,12 +8,12 @@ const validate = require('../middlewares/validate');
 
 const boardController = require('../controllers/boardController');
 
-app.post("/registerTask",Auth,Validate,boardController.registerTask);
+router.post("/registerTask",Auth,validate,boardController.registerTask);
 
-app.put("/modifyTask",Auth,Validate,boardController.updateTask);
+router.put("/modifyTask",Auth,validate,boardController.updateTask);
 
-app.delete("/deleteTask",Auth,Validate,boardController.deleteTask);
+router.delete("/deleteTask",Auth,validate,boardController.removeTask);
 
-app.get("/listTask",Auth,Validate,boardController.listTask);
+router.get("/listTask",Auth,validate,boardController.listTask);
 
 module.exports = router;
