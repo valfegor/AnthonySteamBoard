@@ -1,6 +1,8 @@
 const Board = require('../models/board');
 const mongoose = require('mongoose');
-
+const fs = require("fs");
+const moment = require("moment");
+const path = require("path");
 
 const registerTask = async (req, res) => {
     if(!req.body.name || !req.body.description) return res.status(400).send("Sorry please check all the camps please.");
@@ -25,6 +27,40 @@ const registerTask = async (req, res) => {
 
 }
 
+//Despues de las validaciones por medio del middleware se ejecuta la funcion
+const registerTaskImg = async (req, res) => {
+    if(!req.body.name || !req.body.description) return res.status(400).send("Sorry please check all the camps please.");
+
+    //la url que vamos a guardar en nuestra base.
+
+    let imageUrl = "";
+
+    if(req.files !== undefined && req.files.image.type){
+
+        let url = req.protocol + "://" + req.get('host')+"/";
+
+        let serverImg = "./uploads" + moment().unix() + path.extname(req.files.path);
+
+        fs.createReadStream(req.files.image.path).pipe(fs.createWriteStream(serverImg));
+
+        imageUrl = url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
+
+    }
+
+    
+    const board = new Board({
+        name: req.body.name,
+        description: req.body.description,
+        Status:"to-do",
+        imageUrl:imageUrl,
+        id_user:req.user._id,
+    })
+
+    let result = await board.save();
+
+    if(!result) return res.status(400).send("Sorry please try again.");
+
+}
 
 const updateTask = async (req, res) => {
 
