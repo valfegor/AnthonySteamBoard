@@ -1,8 +1,9 @@
 const Board = require('../models/board');
+const mongoose = require('mongoose');
 
 
 const registerTask = async (req, res) => {
-    if(!req.body.name || req.body.description) return res.status(400).send("Sorry please check all the camps please.");
+    if(!req.body.name || !req.body.description) return res.status(400).send("Sorry please check all the camps please.");
 
     let validId = mongoose.Types.ObjectId.isValid(req.user._id);
     console.log(req.user._id);
@@ -15,9 +16,9 @@ const registerTask = async (req, res) => {
         id_user:req.user._id,
     })
 
-    let result = await result.save();
+    let result = await board.save();
 
-    if(!result.status) return res.status(400).send("Sorry please try again.");
+    if(!result) return res.status(400).send("Sorry please try again.");
 
 
     return res.status(200).send({board})

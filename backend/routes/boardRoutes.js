@@ -12,7 +12,7 @@ router.post("/registerTask",Auth,validate,boardController.registerTask);
 
 router.put("/modifyTask",Auth,validate,boardController.updateTask);
 
-router.delete("/deleteTask",Auth,validate,boardController.removeTask);
+router.delete("/deleteTask/:_id",Auth,validate,boardController.removeTask);
 
 router.get("/listTask",Auth,validate,boardController.listTask);
 
