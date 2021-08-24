@@ -5,6 +5,7 @@ const boardSchema = new mongoose.Schema({
     description:String,
     Status:String,
     date:{type:Date,default:Date.now},
+    imageUrl: String,
     id_user:{ type: mongoose.Schema.ObjectId, ref: "user" }
 });
 
