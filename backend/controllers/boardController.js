@@ -57,7 +57,7 @@ const listTask = async (req, res) =>{
 }
 
 
-const removeBoard = async (req, res) => {
+const removeTask = async (req, res) => {
     let validId = mongoose.Types.ObjectId.isValid(req.user._id);
     console.log(req.user._id);
     if (!validId) return res.status(400).send("Invalid id");
@@ -71,4 +71,4 @@ const removeBoard = async (req, res) => {
 }
 
 
-module.exports = {}
+module.exports = {registerTask,updateTask,listTask,removeTask}
