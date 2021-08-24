@@ -12,7 +12,8 @@ const registerRole = async (req, res) => {
     const role = new Role({
         name:req.body.name,
         description:req.body.description,
-        Status:true
+        Status:true,
+        Users_using:0,
     });
 
     let result = role.save();

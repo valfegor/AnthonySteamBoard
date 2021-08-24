@@ -16,11 +16,13 @@ const registerNormalUser = async (req, res) => {
 
   const role = await Role.findOne({ name: "user" });
 
+
+
   if (!role) return res.status(400).send("Sorry no role asigned");
 
   const hash = await bcrypt.hash(req.body.password, 10);
 
-  console.log(role._id);
+  
 
   let user = new User({
     name: req.body.name,
@@ -82,6 +84,16 @@ const RegisterAdmin = async (req, res) => {
   if (existingEmail) return res.status(400).send("Email already taken");
 
   const hash = await bcrypt.hash(req.body.password, 10);
+
+  let createnew_user = await Role.findById(req.body.id_Role);
+
+  console.log(createnew_user.Users_using);
+
+  let role = await Role.findByIdAndUpdate(req.body._id, {
+    Users_using:+2,
+  });
+
+  
 
   let user = new User({
     name: req.body.name,

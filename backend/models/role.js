@@ -5,6 +5,7 @@ const roleSchema = new mongoose.Schema({
     description:String,
     date:{type:Date,default:Date.now},
     Status:Boolean,
+    Users_using:Number,
 });
 
 
