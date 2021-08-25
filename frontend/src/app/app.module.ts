@@ -16,6 +16,16 @@ import { RegisterRoleComponent } from './admin/register-role/register-role.compo
 import { ListRoleComponent } from './admin/list-role/list-role.component';
 import { UpdateRoleComponent } from './admin/update-role/update-role.component';
 
+//services.
+
+import { UserService } from './services/user.service';
+import { RoleService } from './services/role.service';
+import { BoardService } from './services/board.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+
+//guard.
+import { AuthGuard } from "./guard/auth.guard";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,13 +40,10 @@ import { UpdateRoleComponent } from './admin/update-role/update-role.component';
     UpdateUserComponent,
     RegisterRoleComponent,
     ListRoleComponent,
-    UpdateRoleComponent
+    UpdateRoleComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, AppRoutingModule],
+  providers: [UserService, RoleService, BoardService, TokenInterceptorService,AuthGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
