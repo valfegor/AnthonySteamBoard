@@ -8,6 +8,9 @@
     <ul>
       <a routerLink="listUser" *ngIf="_userService.loggedIn()">Admin</a>
     </ul>
+    <ul>
+      <a routerLink="listUser" *ngIf="_userService.loggedIn()">Admin</a>
+    </ul>
     <span class="headerSpace"> </span>
     <ul>
       <a mat-button routerLink="SingUp" *ngIf="!_userService.loggedIn()">Sing Up</a>

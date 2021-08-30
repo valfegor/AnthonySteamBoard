@@ -47,7 +47,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 //iconos
-import {MatIconModule} from '@angular/material/icon'; 
+import {MatIconModule} from '@angular/material/icon';
+import { TableComponent } from './home/table/table.component'; 
+import {MatTableModule} from '@angular/material/table'; 
 
 
 @NgModule({
@@ -65,6 +67,7 @@ import {MatIconModule} from '@angular/material/icon';
     RegisterRoleComponent,
     ListRoleComponent,
     UpdateRoleComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +83,8 @@ import {MatIconModule} from '@angular/material/icon';
     ReactiveFormsModule,
     HttpClientModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule
 
   ],
   providers: [

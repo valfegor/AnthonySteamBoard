@@ -6,27 +6,29 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <span>{{ task.name }}</span>
+               
                 <span class="spacer"></span>
+                <span>Created At{{ task.date }}</span>
                 <button
                   class="btnDone"
                   *ngIf="task.taskStatus == 'done'"
                   mat-raised-button
                 >
-                  {{ task.taskStatus }}
+                  {{ task.Status}}
                 </button>
                 <button
                   class="btnInProgress"
                   *ngIf="task.taskStatus == 'in-progress'"
                   mat-raised-button
                 >
-                  {{ task.taskStatus }}
+                {{ task.Status}}
                 </button>
                 <button
                   class="btnToDo"
                   *ngIf="task.taskStatus == 'to-do'"
                   mat-raised-button
                 >
-                  {{ task.taskStatus }}
+                {{ task.Status}}
                 </button>
               </mat-panel-title>
             </mat-expansion-panel-header>

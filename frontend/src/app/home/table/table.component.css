@@ -1,0 +1,27 @@
+.barra{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20PX;
+}
+
+.barra td , .barra th{
+    border:1px solid #ddd;
+    padding:8px;
+}
+
+.barra tr:nth-child(even){
+    background-color: #ffffff;
+}
+
+.barra tr:hover{
+    background-color: #ddd;
+}
+
+.barra th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: black;
+    color: white;
+}

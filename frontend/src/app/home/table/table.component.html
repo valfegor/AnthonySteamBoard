@@ -1,0 +1,18 @@
+<table class="barra">
+    <tr>
+        <th *ngFor="let column of columns">
+            {{column}}
+        </th>
+    </tr>
+    <tr *ngFor="let task of taskData">
+        <td>
+            {{task.name}}
+        </td>
+        <td>
+        {{task.description}}
+        </td>
+        <td>
+            {{task.Status}}
+        </td>
+    </tr>
+</table>
