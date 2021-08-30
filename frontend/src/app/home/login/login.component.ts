@@ -37,13 +37,18 @@ export class LoginComponent implements OnInit {
     if(!this.loginData.email || !this.loginData.password){
       this.message  = "Sorry please check password or the email";
       this.openSnackBarError();
+      this.loginData={};
     }else{
       this._userService.login(this.loginData).subscribe(
         (res)=>{
-          
+          localStorage.setItem('token',res.jwtToken);
+          this._router.navigate(['/listTask']);
+          this.loginData ={};
         },
         (err)=>{
-
+          this.message = err.error;
+          this.openSnackBarError();
+          this.loginData={}
         }
       )
     }
