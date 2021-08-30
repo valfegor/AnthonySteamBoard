@@ -42,6 +42,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import procotolo HTTP.
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
+//acordeon
+import {MatExpansionModule} from '@angular/material/expansion';
+
+//iconos
+import {MatIconModule} from '@angular/material/icon'; 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +78,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatExpansionModule,
+    MatIconModule
+
   ],
   providers: [
     UserService,
