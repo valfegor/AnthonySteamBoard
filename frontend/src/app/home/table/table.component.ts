@@ -17,7 +17,7 @@ export class TableComponent implements OnInit {
   public columns:any;
   constructor(private _boardService:BoardService) {
   this.taskData=[];
-  this.columns=['nombre','descripcion','Status'];
+  this.columns=['nombre','descripcion','Status','Created-AT'];
    }
   ngOnInit(): void {
    

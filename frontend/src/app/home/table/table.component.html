@@ -5,14 +5,17 @@
         </th>
     </tr>
     <tr *ngFor="let task of taskData">
-        <td>
+        <td *ngIf="task.Status=='done'">
             {{task.name}}
         </td>
-        <td>
+        <td *ngIf="task.Status=='done'">
         {{task.description}}
         </td>
-        <td>
+        <td *ngIf="task.Status=='done'">
             {{task.Status}}
+        </td>
+        <td *ngIf="task.Status=='done'">
+            {{task.date}}
         </td>
     </tr>
 </table>
