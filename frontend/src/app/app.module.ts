@@ -40,7 +40,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //import procotolo HTTP.
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -76,7 +76,11 @@ import { HttpClientModule } from '@angular/common/http';
     UserService,
     RoleService,
     BoardService,
-    TokenInterceptorService,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:TokenInterceptorService,
+      multi:true 
+    },
     AuthGuard,
   ],
   bootstrap: [AppComponent],
