@@ -29,10 +29,15 @@ export class ListTaskComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    
     this._boardService.listTask().subscribe(
       (res)=>{
         console.log(res);
         this.taskData = res.board
+        if(this.taskData==0 || this.taskData==[]){
+          this.message = "No Task",
+          this.openSnackBarSuccesfull();
+        }
       },
       (err)=>{
         this.message="Cant save the task please try again";
@@ -42,7 +47,25 @@ export class ListTaskComponent implements OnInit {
     )
   }
 
-  updateTask(task:any,status:string){}
+  updateTask(task:any,status:string){
+    let temporal = task.Status;
+    task.Status = status;
+
+    this._boardService.updateTask(task).subscribe(
+      (res)=>{
+        console.log(task.name)
+        this.message = `Status changed in ${task.name}`
+        this.openSnackBarSuccesfull();
+        task.status = status
+      },
+      (err)=>{
+        task.status = temporal;
+        this.message = err.error;
+        this.openSnackBarError();
+      }
+    )
+
+  }
 
   deleteTask(task:any){
     this._boardService.deleteTask(task).subscribe(
