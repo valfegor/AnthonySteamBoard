@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
   public message: string;
   public horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   public VerticalPosition: MatSnackBarVerticalPosition = 'top';
+  public durationInSeconds: number;
   //son items que necesito que se construyan antes de que se arme el archivo , el constuctor amrama ,
   constructor(
     private _userService: UserService,
@@ -36,6 +37,7 @@ export class RegisterComponent implements OnInit {
     //antes de que se construya el archivo la inicializo
     this.message = '';
     this.registerData = {};
+    this.durationInSeconds =2;
     //mensajehorizontal
   }
 
@@ -43,14 +45,46 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   registerUser(){
-
+    if(!this.registerData.name || !this.registerData.email || !this.registerData.password){
+      this.message = "Sorry The process failed";
+      this.openSnackBarError();
+    }
+    else{
+      this._userService.registerUser(this.registerData).subscribe(
+        (res) => {
+          localStorage.setItem('token',res.jwtToken);
+          this._router.navigate(['/saveTask']);
+          this.message = 'Success Register The user';
+          this.openSnackBarSuccesfull();
+          this.registerData = {};
+        },
+        (err) => {
+          this.message=err.error;
+          this.openSnackBarError();
+        }
+      )
+    }
   }
 
-  openSnackBarSuccesfull(){
-
+  openSnackBarSuccesfull() {
+    //this.messague = por que ha estado cambiando , {} = CONFIGURACIONES DE LA BARRA , propiedad de la duracion 
+    this._snackbar.open(this.message,'X',{
+      horizontalPosition:this.horizontalPosition,
+      verticalPosition:this.VerticalPosition,
+      duration:this.durationInSeconds*1000,
+      panelClass:['style-snackBarTrue']
+    });
   }
 
-  openSnackBarError(){
-
+  openSnackBarError() {
+    this._snackbar.open(this.message,'X',{
+      horizontalPosition:this.horizontalPosition,
+      verticalPosition:this.VerticalPosition,
+      duration:this.durationInSeconds*1000,
+      panelClass:['style-snackBarFalse']
+    });
   }
+
+
+  
 }
