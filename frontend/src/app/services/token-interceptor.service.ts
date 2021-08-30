@@ -14,7 +14,7 @@ export class TokenInterceptorService {
         Authorization:'Bearer ' + this._userService.getToken(),
       }
     });
-    return next.hande(tokenReq);
+    return next.handle(tokenReq);
   }
 
 }
