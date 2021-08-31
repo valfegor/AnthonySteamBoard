@@ -22,6 +22,6 @@ router.delete("/deleteTask/:_id",Auth,validate,boardController.removeTask);
 
 router.get("/listTask",Auth,validate,boardController.listTask);
 
-router.post("/imageTask",multi,Upload,Auth,validate,boardController.saveTaskImg);
+router.post("/saveTaskImg",multi,Upload,Auth,validate,boardController.saveTaskImg);
 
 module.exports = router;

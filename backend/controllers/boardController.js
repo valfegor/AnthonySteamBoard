@@ -30,7 +30,7 @@ const registerTask = async (req, res) => {
 //Despues de las validaciones por medio del middleware se ejecuta la funcion
 
 const saveTaskImg = async (req, res) => {
-    if (!req.body.name || !req.body.description)
+  if (!req.body.name || !req.body.description)
     return res.status(400).send("Incomplete data");
     //necesitamos generar una URL para cargar la imagen
     let imageUrl = ""; //http://localhost:3001/
@@ -51,7 +51,7 @@ const saveTaskImg = async (req, res) => {
       imageUrl = url + "uploads/" + moment().unix() + path.extname(req.files.image.path);
     }
   let board = new Board({
-    id_user:req.user._id,
+    id_user: req.user._id,
     name: req.body.name,
     description: req.body.description,
     taskStatus: "to-do",
@@ -61,6 +61,7 @@ const saveTaskImg = async (req, res) => {
   let result = await board.save();
   if (!result) return res.status(400).send("Error registering task");
   return res.status(200).send({ result });
+
 
   };
 
@@ -85,15 +86,10 @@ const updateTask = async (req, res) => {
 
 const listTask = async (req, res) =>{
     
-    let validId = mongoose.Types.ObjectId.isValid(req.user._id);
-    console.log(req.user._id);
-    if (!validId) return res.status(400).send("Invalid id");
-
-    const board =await Board.find({id_user:req.user._id});
-
-    if(!board) return res.status(400).send("Sorry no tasks");
-
-    return res.status(200).send({board});
+  let board = await Board.find({ id_user: req.user._id });
+  if (!board || board.length === 0)
+    return res.status(400).send("You have no assigned tasks");
+  return res.status(200).send({ board });
 }
 
 

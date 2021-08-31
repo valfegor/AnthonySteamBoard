@@ -10,7 +10,7 @@ import { ListTaskComponent } from './board/list-task/list-task.component';
 import { SaveTaskComponent } from './board/save-task/save-task.component';
 import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
-import { TableComponent } from "./home/table/table.component";
+
 
 
 
@@ -82,12 +82,7 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate:[AuthGuard]
   },
-  {
-    path: 'listTable',
-    component: TableComponent,
-    pathMatch: 'full',
-    canActivate:[AuthGuard]
-  },
+ 
 
 ];
 

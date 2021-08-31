@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-//se importa el servicio.
-import { BoardService } from "../../services/board.service";
-import { Router } from "@angular/router";
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+//import del servicio del usuario.
+import { BoardService } from '../../services/board.service';
+//se importa el router por que se va a comunicar por medio de rutas.
+import { Router } from '@angular/router';
+//traemos el snapbar por que este nos va a mostrar ciertos mensajes
+//es una barra de mensajes
+  import {
+    MatSnackBar,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition,
+  } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-list-task',
@@ -15,76 +19,80 @@ import {
 })
 export class ListTaskComponent implements OnInit {
 
-  public taskData:any;
+  public taskData: any;
   public message: string;
   public horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   public VerticalPosition: MatSnackBarVerticalPosition = 'top';
   public duratioInseconds: number;
 
 
-  constructor(private _boardService:BoardService , private _router:Router , private _snackbar: MatSnackBar) {
-    this.message="";
+  constructor(private _boardService: BoardService,
+    private _router: Router,
+    private _snackbar: MatSnackBar) {
+
+    this.message = "";
     this.duratioInseconds = 2;
     this.taskData = {}
+    
    }
 
   ngOnInit(): void {
-    
     this._boardService.listTask().subscribe(
       (res)=>{
         console.log(res);
-        this.taskData = res.board
-        if(this.taskData==0 || this.taskData==[]){
-          this.message = "No Task",
-          this.openSnackBarSuccesfull();
-        }
+        
+        this.taskData = res.board;
+       
       },
       (err)=>{
-        this.message="Cant save the task please try again";
-        this.openSnackBarError();
-        this.taskData = {}
-      }
-    )
-  }
-
-  updateTask(task:any,status:string){
-    let temporal = task.Status;
-    task.Status = status;
-
-    this._boardService.updateTask(task).subscribe(
-      (res)=>{
-        console.log(task.name)
-        this.message = `Status changed in ${task.name}`
-        this.openSnackBarSuccesfull();
-        task.status = status
-      },
-      (err)=>{
-        task.status = temporal;
+        console.log(err);
         this.message = err.error;
         this.openSnackBarError();
       }
     )
+  }
+  //name:zzz description:zzz taskStatus:to-do
+  //status:in-progress
+  updateTask(task:any,status:string){
+    console.log(task);
+    
+    let tempStatus = task.taskStatus
+    task.taskStatus = status
 
+    //esto va al backend.
+
+    this._boardService.updateTask(task).subscribe(
+    
+      
+      (res)=>{
+        task.status = status
+      },
+      (err)=>{
+        task.status = tempStatus
+        this.message = err.error;
+        this.openSnackBarError();
+      }
+    )
   }
 
   deleteTask(task:any){
     this._boardService.deleteTask(task).subscribe(
       (res)=>{
-        let index = this.taskData.indexOf(task);
+        //llega la tarea que se quiere eliminar , se guarda el indice , se va al array que es taskdata , el indexOf guarda el indice
+        let index = this.taskData.indexOf(task)
         if(index>-1){
+          //el splice elimina desde el indice si ya tengo el indice lo elimino
           this.taskData.splice(index,1);
-          this.message = "Succesfully Erased The task"
-          this.openSnackBarSuccesfull();
+          this.message = res.message;
+          this.openSnackBarSuccesfull()
         }
       },
       (err)=>{
-        this.message = "Sorry Cant Eliminate The task";
+        this.message = err.error;
         this.openSnackBarError();
       }
-
     )
   }
-
 
 
   openSnackBarSuccesfull() {
@@ -105,5 +113,4 @@ export class ListTaskComponent implements OnInit {
       panelClass:['style-snackBarFalse']
     });
   }
-
 }

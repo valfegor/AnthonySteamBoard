@@ -27,4 +27,8 @@ export class BoardService {
   updateTask(board:any){
     return this._http.put<any>(this.env+'board/modifyTask',board)
   }
+
+  saveTaskImg(board:any){
+    return this._http.post<any>(this.env + 'board/saveTaskImg', board)
+  }
 }

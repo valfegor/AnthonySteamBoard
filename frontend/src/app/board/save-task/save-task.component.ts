@@ -18,14 +18,58 @@ export class SaveTaskComponent implements OnInit {
   public horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   public VerticalPosition: MatSnackBarVerticalPosition = 'top';
   public durationInSeconds: number;
+  public selectedFile:any;
   constructor(private _router:Router , private _boardService:BoardService , private _snackbar: MatSnackBar) {
     this.registerData = {}
     this.message = ""
     this.durationInSeconds = 2;
+    this.selectedFile=null;
    }
 
   ngOnInit(): void {
   }
+
+  uploadImg(event:any){
+    this.selectedFile = <File>event.target.files[0];
+  }
+
+  saveTaskImg() {
+    //validamos que lleguen los datos
+    if (!this.registerData.name || !this.registerData.description) {
+      console.log('Failed process:incomplete data');
+      this.message = 'Failed process:imcomplete data';
+      this.openSnackBarError();
+      this.registerData = {};
+    } else {
+      const data = new FormData();
+      data.append('image',this.selectedFile , this.selectedFile.name);
+      data.append('name',this.registerData.name);
+      data.append('description',this.registerData.description)
+      //servicio de usuario el subscribe es como el trycach
+      this._boardService.saveTaskImg(data).subscribe(
+        (res) => {
+          console.log(res);
+          //guardamos en el local storage , para saber que hay un usuario registrado
+
+          //despues los redirecciona a guardar su primera tarea
+          this._router.navigate(['/listTask']);
+
+          this.message = 'Succesfull Task Registration';
+
+          this.openSnackBarSuccesfull();
+
+          //despues de todo debe quedar vacio de nuevo
+          this.registerData = {};
+        },
+        (err) => {
+          console.log(err);
+          this.message = err.error;
+          this.openSnackBarError();
+        }
+      );
+    }
+  }
+
 
   saveTask(){
     if(!this.registerData.name || !this.registerData.description){
